@@ -1,151 +1,59 @@
-WordPiece Tokenizer 
+ WordPiece Tokenization
 
-WordPiece is a subword tokenization algorithm used by BERT-family models. It splits words into smaller subword tokens and uses a scoring method to select token pairs for merging.
+ Overview
 
-In this project, the training words are:
+This project demonstrates the basic working of **WordPiece Tokenization using Python**.
 
-cat  → 3
-cats → 2
-dog  → 1
+WordPiece is a subword tokenization method commonly used in Natural Language Processing (NLP) and Transformer-based language models. It divides words into smaller subword tokens instead of treating every complete word as a single token.
+
+This project implements the main steps of WordPiece Tokenization from scratch using a small training corpus.
+
+Corpus
+
+The training corpus used in this project contains the following words with their frequencies:
+
+```text
+cat   → 3
+cats  → 2
+dog   → 1
+
+These words are used to demonstrate token frequency calculation, pair frequency calculation, WordPiece scoring, pair merging, and tokenization.
+
+Initial Splits
+
+The words are initially divided into character-level tokens.
+cat   → c ##a ##t
+cats  → c ##a ##t ##s
+dog   → d ##o ##g
+
+The ## symbol indicates that the token occurs inside a word.
 
 Features
 
-Creates initial character-level tokens
-Uses ## for tokens occurring inside words
+Creates initial character-level token splits
+Uses ## for subword tokens
 Calculates token frequencies
 Calculates pair frequencies
 Calculates WordPiece scores
-Finds the highest-scoring pair
-Merges token pairs
-Tokenizes new words using the longest matching subword
+Finds the best-scoring pair
+Merges the selected pair
+Creates a vocabulary
+Tokenizes a new word
 Converts tokens into token IDs
-Handles unknown words using
+Handles unknown words using [UNK]
 
-Technologies Used
+WordPiece Scoring
 
-Python
-collections.Counter
+The WordPiece score is calculated using the following formula:
+Score(pair) = Pair Frequency /
+              (Frequency of First Token × Frequency of Second Token)
 
-Project Structure
-wordpiece_tokenizer/
-│
-└── wordpiece.py
-How It Works
-1. Training Data
-cat  → 3
-cats → 2
-dog  → 1
-2. Initial Tokenization
-cat  → c ##a ##t
-cats → c ##a ##t ##s
-dog  → d ##o ##g
+The program calculates the score for every adjacent token pair and selects the pair with the highest score.
 
-The first character does not use ##; tokens occurring inside a word use ##.
+Pair Merging
 
-3. Token Frequency
+After finding the best pair, the program merges the two tokens into a new token.
 
-The program counts how frequently each individual token occurs.
+The merge_pair() function checks each word and replaces the selected adjacent pair with the newly created token.
 
-4. Pair Frequency
-
-Adjacent token pairs are counted, for example:
-
-c + ##a
-##a + ##t
-d + ##o
-##o + ##g
-5. WordPiece Score
-
-The program calculates a score for every pair using:
-
-score = pair frequency /
-        (first token frequency × second token frequency)
-
-The highest-scoring pair is selected for merging.
-
-6. Merge
-
-The selected pair is combined into a new token.
-
-For example:
-
-d + ##o
-
-becomes:
-
-do
-7. Tokenize a New Word
-
-For example:
-
-dog
-
-can become:
-
-["do", "##g"]
-
-WordPiece searches for the longest available subword and then processes the remaining part.
-
-8. Token IDs
-
-Tokens are assigned numerical IDs.
-
-Example:
-
-["do", "##g"]
-
-becomes:
-
-[8, 7]
-9. Unknown Words
-
-If a word cannot be completely represented using the vocabulary, the tokenizer returns:
-
-["[UNK]"]
-
-Installation
-
-No installation is required apart from Python.
-
-Check Python:
-
-python --version
-Run the Project
-
-Open the terminal inside the project folder:
-
-python wordpiece.py
-
-If python does not work on Windows, try:
-
-py wordpiece.py
-
-Output:<img width="1062" height="927" alt="Output 1" src="https://github.com/user-attachments/assets/52246d36-69f0-413a-89c0-e7b9d3b6efd8" />
-
-Complete Pipeline
-
-Training Data
-      ↓
-Initial Character Splits
-      ↓
-Token Frequencies
-      ↓
-Pair Frequencies
-      ↓
-WordPiece Scores
-      ↓
-Highest-Scoring Pair
-      ↓
-Merge Pair
-      ↓
-Updated Vocabulary
-      ↓
-Tokenize New Word
-      ↓
-Convert Tokens to IDs
-      ↓
-[UNK] for Unknown Words
-
-👩‍💻 Author
-
-Madhumitha.U
+def merge_pair(splits, pair):
