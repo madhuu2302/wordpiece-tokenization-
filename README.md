@@ -1,6 +1,7 @@
 wordpiece-Tokenization
 
 About the Project:
+
 This project demonstrates the implementation of WordPiece Tokenization, a subword tokenization technique commonly used in Natural Language Processing (NLP).
 
 WordPiece breaks words into smaller subword units instead of treating every complete word as a separate token. This helps NLP models handle unknown words, rare words, and different word forms more effectively.
@@ -8,16 +9,13 @@ WordPiece breaks words into smaller subword units instead of treating every comp
 Objectives:
 
 Understand the concept of WordPiece Tokenization.
-
 Implement WordPiece Tokenization using Python.
-
 Learn how words can be divided into meaningful subword tokens.
-
 Understand the importance of subword tokenization in NLP and language models.
-
 Generate tokens that can be used as input for NLP models.
 
 What is WordPiece Tokenization?
+
 WordPiece is a subword tokenization algorithm that represents text using a combination of complete words and smaller subword units.
 
 For example, a word can be divided into smaller parts such as:
@@ -78,11 +76,17 @@ Applications:
 WordPiece Tokenization is useful in:
 
 Natural Language Processing
+
 Text Classification
+
 Machine Translation
+
 Question Answering
+
 Sentiment Analysis
+
 Large Language Models
+
 Learning Outcome
 Through this project, I learned:
 
